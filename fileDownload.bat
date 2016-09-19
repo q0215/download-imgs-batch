@@ -11,14 +11,15 @@ if "%2" == "" (
 
 set TASK=TASK
 set URL=%1
+set OUTPUT=%2
 
 call :GET_FILENAME %URL%
 
 :RTN
 echo ファイル取得先URL：%URL%
-echo 出力フォルダ：%FOLDER%\%FILENAME%
+echo 出力フォルダ：%OUTPUT%
 
-bitsadmin.exe /TRANSFER %TASK% %URL% %FOLDER%\%FILENAME%
+bitsadmin.exe /TRANSFER %TASK% %URL% %OUTPUT%\%FILENAME%
 
 echo バッチ処理を終了しました。
 exit 0
