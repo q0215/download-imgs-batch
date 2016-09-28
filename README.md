@@ -1,18 +1,9 @@
-# url-download-bat  
+# 「アイカツスターズ交換用画像ツール」運用管理ツール  
+
+* create-json.xlsm  
+    - ファイル内のシート[はじめに]を読んで使用してください。  
+    - ファイルを開いた際にセキュリティ警告が表示された場合、[オプション]→[このコンテンツを有効にする]を選択してください。
 
 * start.bat  
- - this is main bat.  
- - $1 [optional] target file name.  
-   default is "input.csv".  
-   if you want to specify, it is necessary to be in the same folder as this bat.  
-
-* fileDownload.bat  
- - $1 [required] target url.  
- - $2 [required] output folder path.  
-
-* output/  
- - this is folder to output files.  
-
-* input.txt  
- - this is default target file read by "start.bat".  
- - write target urls!  
+    - create-json.xlsmで作成されたinput.txtを元に画像ファイルを取得し、outputフォルダに出力します。  
+    - ダブルクリック、またはコマンドプロンプトから起動します。  
