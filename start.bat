@@ -1,6 +1,7 @@
 @echo off
+setlocal
 
-echo バッチ処理を開始します。
+echo バッチを開始します。
 
 cd /d %~dp0
 
@@ -13,13 +14,13 @@ if not "%1" == "" (
 )
 
 if not exist "%FILE%" (
-  goto NOFILE
+  goto NO_INPUT_FILE
 )
 
 echo 入力ファイル：%FILE%
 echo 出力フォルダ：%FOLDER%
 
-set /p FLG=ファイルダウンロードを行いますか？[y/n]：
+set /p FLG=ダウンロードを行いますか？[y/n]：
 
 if not "%FLG%"=="y" (
   GOTO CANCEL
@@ -29,21 +30,41 @@ if not exist %FOLDER%\ (
   mkdir %FOLDER%
 )
 
+set TASK=TASK
+
 for /f "delims= eol=" %%X in (%FILE%) do (
-  start /w fileDownload.bat %%X %FOLDER%
+  call :DOWNLOAD_FILE %%X
 )
 
 goto END
 
-:NOFILE
+:DOWNLOAD_FILE
+for /f "tokens=2* delims=/" %%i in ("%1") do (
+  echo %%j | findstr \/ > nul
+  if errorlevel 1 (
+    call bitsadmin.exe /TRANSFER %TASK% %%X %FOLDER%\%%j > nul
+    if errorlevel 0 (
+      echo 正常：%%X
+    ) else (
+      echo 異常：%%X
+    )
+    exit /b 0
+  ) else (
+    call :DOWNLOAD_FILE %%i/%%j
+    exit /b 1
+  )
+)
+exit /b 1
+
+:NO_INPUT_FILE
 echo %FILE%が存在しません。
 goto END
 
 :CANCEL
-echo ファイルダウンロードがキャンセルされました。
+echo ダウンロードがキャンセルされました。
 goto END
 
 :END
-echo バッチ処理を終了しました。
+echo バッチを終了しました。
 pause
 exit 0
