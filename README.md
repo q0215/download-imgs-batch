@@ -6,10 +6,6 @@
    default is "input.csv".  
    if you want to specify, it is necessary to be in the same folder as this bat.  
 
-* fileDownload.bat  
- - $1 [required] target url.  
- - $2 [required] output folder path.  
-
 * output/  
  - this is folder to output files.  
 
